@@ -32,12 +32,14 @@ ALLOWED_HOSTS = ['165.227.234.172']
 # Application definition
 
 INSTALLED_APPS = [
+	'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'monitor',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +131,14 @@ STATICFILES_DIRS = [
 
 # STATIC_ROOT = '/var/www/wscoins/static/'
 STATIC_URL = '/static/'
+
+# Channels
+ASGI_APPLICATION = 'wscoins.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('localhost', 6379)],
+        },
+    },
+}
