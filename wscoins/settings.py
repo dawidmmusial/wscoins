@@ -134,6 +134,9 @@ STATIC_URL = '/static/'
 
 # Channels
 ASGI_APPLICATION = 'wscoins.routing.application'
+
+BROKER_URL = 'redis://localhost:6379/'
+
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
@@ -142,3 +145,4 @@ CHANNEL_LAYERS = {
         },
     },
 }
+

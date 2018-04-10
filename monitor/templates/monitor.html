@@ -1,0 +1,31 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>WSCoins</title>
+</head>
+
+<body>
+	<h1>WSCoins Monitor</h1>
+    <div id="content"></div>
+</body>
+<script>
+    var monitorSocket = new WebSocket('ws://' + window.location.host + '/ws/');
+    
+    monitorSocket.onopen = function(e) {
+        console.log("Connected to websocket!");
+    };
+        
+    monitorSocket.onmessage = function(e) {
+        var data = JSON.parse(e.data);
+        var message = data['message'];
+		console.log(message);
+        document.getElementById("content").textContent = message;
+    };
+    
+    monitorSocket.onclose = function(e) {
+        console.error('Monitor socket closed unexpectedly');
+    };
+</script>
+
+</html> 
