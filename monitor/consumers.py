@@ -1,6 +1,6 @@
+import json
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-import json
 
 class MonitorConsumer(WebsocketConsumer):
     def connect(self):
@@ -30,17 +30,15 @@ class MonitorConsumer(WebsocketConsumer):
         async_to_sync(self.channel_layer.group_send)(
             self.group_name,
             {
-                'type': 'chat_message',
+                'type': 'send_prices',
                 'message': message
             }
         )
 
     # Receive message from group
-    def chat_message(self, event):
-        message = event['message']
+    def send_prices(self, event):
+        data = event['data']
 
         # Send message to WebSocket
-        self.send(text_data=json.dumps({
-            'message': message
-        }))
+        self.send(text_data=data)
         
