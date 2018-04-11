@@ -21,20 +21,6 @@ class MonitorConsumer(WebsocketConsumer):
             self.channel_name
         )
 
-    # Receive message from WebSocket
-    def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-
-        # Send message to group
-        async_to_sync(self.channel_layer.group_send)(
-            self.group_name,
-            {
-                'type': 'send_prices',
-                'message': message
-            }
-        )
-
     # Receive message from group
     def send_prices(self, event):
         data = event['data']

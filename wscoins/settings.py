@@ -151,7 +151,7 @@ CELERY_BROKER_URL = 'redis://localhost:6379/'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/'
 CELERY_IMPORTS = ('monitor.tasks',)
 
-# URL to json cryptocurency priceS information
+# URL to json cryptocurrencys prices information
 # https://min-api.cryptocompare.com/
 
 CRYPTOCOMPARE_API_PRICES = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH&tsyms=USD,EUR,PLN'

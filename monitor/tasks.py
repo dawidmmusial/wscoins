@@ -1,15 +1,19 @@
-import json
 from asgiref.sync import async_to_sync
 from celery import shared_task
 from channels.layers import get_channel_layer
-from .tools import get_cryptocompare_prices
+from django.conf import settings
+from wscoins.celery import app
+from .tools import get_cryptocurrency
 
-@shared_task
-def test_send(val):
-    channel_layer = get_channel_layer()
-    async_to_sync(channel_layer.group_send)('mcoins', {'type': 'task.message','message': val})
+app.conf.beat_schedule = {
+    'send-cryptocurency-value-every-10-seconds': {
+        'task': 'monitor.tasks.send_cryptocompare_prices',
+        'schedule': 10.0
+    },
+}
 
 @shared_task
 def send_cryptocompare_prices():
+    """Task send to channel layer's group cryptocurrencys value"""
     channel_layer = get_channel_layer()
-    async_to_sync(channel_layer.group_send)('mcoins', {'type': 'send.prices','data': get_cryptocompare_prices()})
+    async_to_sync(channel_layer.group_send)('mcoins', {'type': 'send.prices','data': get_cryptocurrency(settings.CRYPTOCOMPARE_API_PRICES)})
