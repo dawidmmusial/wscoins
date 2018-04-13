@@ -122,9 +122,7 @@
         };
             
         monitorSocket.onmessage = function(e) {
-            console.log(e.data);
             var data = JSON.parse(e.data);
-            var message = data['BTC']['PLN'];
             document.getElementById("btc-pln").textContent = data['BTC']['PLN'];
             document.getElementById("btc-eur").textContent = data['BTC']['EUR'];
             document.getElementById("btc-usd").textContent = data['BTC']['USD'];
